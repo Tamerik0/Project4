@@ -50,6 +50,7 @@ public:
 	void use() {
 		glUseProgram(id);
 	}
+	
 	int getId() {
 		return id;
 	}
