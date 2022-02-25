@@ -1,0 +1,40 @@
+#pragma once
+#include <GL/glew.h>
+#include <iostream>
+#include <vector>
+class EBO
+{
+private:
+	uint32_t id;
+	GLenum usage = GL_STATIC_DRAW;
+	int verticesCount;
+public:
+	static void unbindEBO() {
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	}
+	EBO() {
+		glGenBuffers(1, &id);
+	}
+	int getVerticesCount() {
+		return verticesCount;
+	}
+	void bind() {
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id);
+	}
+	void setData(void* indices, int count){
+		bind();
+		verticesCount = count;
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), indices, usage);
+		unbindEBO();
+	}
+	/*void setData(std::vector<uint32_t>& indices) {
+		bind();
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * 4, &indices, usage);
+		verticesCount = indices.size();
+		unbindEBO();
+	}*/
+	void setUsage(GLenum u) {
+		usage = u;
+	}
+};
+

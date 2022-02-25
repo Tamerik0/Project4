@@ -2,13 +2,17 @@
 #include <GL/glew.h>
 #include <iostream>
 #include <vector>
+#include "VAO.hpp"
+
 class VBO {
+	friend class VAO;
 	class VertexAttrib;
 private:
 	uint32_t id;
 	std::vector <VertexAttrib> attribs;
 
 	GLenum drawMode;
+	GLenum usage;
 	int vertexCount;
 	int vertexSize;
 	void* data;
@@ -23,8 +27,7 @@ public:
 		int count;
 	public:
 		VertexAttrib(int loc, bool normalize, GLenum dataType, int count) : location(loc), normalize(normalize), dataType(dataType), count(count) {}
-		VertexAttrib(int loc, GLenum dataType, int count) : location(loc), normalize(normalize), dataType(dataType), count(count) {}
-		VertexAttrib(int loc, bool normalize, int count) : location(loc), normalize(normalize), dataType(dataType), count(count) {}
+		VertexAttrib(int loc, GLenum dataType, int count) : location(loc), dataType(dataType), count(count) {}
 		VertexAttrib(int loc, int count) : location(loc), normalize(normalize), dataType(dataType), count(count) {}
 		int getSize() {
 			switch (dataType) {
@@ -72,27 +75,31 @@ public:
 	void setDrawMode(GLenum dm) {
 		drawMode = dm;
 	}
+	void setUsage(GLenum u) {
+		usage = u;
+	}
 	static void unbindVBO() {
 		glBindBuffer(GL_VERTEX_ARRAY, 0);
 	}
 	
 	void bind() {
-		glBindBuffer(GL_VERTEX_ARRAY, id);
+		glBindBuffer(GL_ARRAY_BUFFER, id);
 	}
 	void draw() {
-		bind();
 		setup();
 		glDrawArrays(drawMode, 0, vertexCount);
 		unbindVBO();
 	}
 	void setup() {
+		bind();
 		int off = 0;
 		for (int i = 0; i < attribs.size(); i++) {
 			VertexAttrib current = attribs[i];
-			int s = current.getSize();
+			int s = current.count;
 			glVertexAttribPointer(current.location, s, current.dataType, current.normalize, vertexSize, (void*)off);
 			glEnableVertexAttribArray(current.location);
-			off += s;
+			off += current.getSize();
+			
 		}
 	}
 	int calculateVertexSize() {
@@ -107,9 +114,21 @@ public:
 		this->data = data;
 		this->vertexCount = vertexCount;
 	}
-	void loadToGPU(int size, GLenum usage) {
+	void loadToGPU() {
 		bind();
-		glBufferData(GL_VERTEX_ARRAY, vertexCount*vertexSize, data, usage);
+		glBufferData(GL_ARRAY_BUFFER, vertexCount*vertexSize, data, usage);
 		unbindVBO();
+	}
+	void setData(void* data) {
+		this->data = data;
+	}
+	void update(void* data) {
+		setData(data);
+		loadToGPU();
+	}
+	void update(void* data, int vertexCount) {
+
+		setData(data, vertexCount);
+		loadToGPU();
 	}
 };
