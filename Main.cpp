@@ -45,28 +45,26 @@ void InitOpenGL() {
 
 }
 void CreateCubeVAO () {
-    VBO* vbo=new VBO();
-    vbo->setVertexAttribs({ VBO::VertexAttrib(0,GL_FLOAT,3),VBO::VertexAttrib(1,GL_FLOAT,3) });
-    vbo->setDrawMode(GL_QUADS);
-    vbo->setUsage(GL_STATIC_DRAW);
-    vbo->update(&vertices, 8);
-    EBO* ebo=new EBO();
-    ebo->setUsage(GL_STATIC_DRAW);
-    ebo->setData(&indices, 24);
-    VAO* v=new VAO();
-    v->setVBO(vbo);
-    v->setEBO(ebo);
-    v->setup();
-    vao = v;
+    VBO &vbo = *new VBO();
+    vbo.setVertexAttribs({ VBO::VertexAttrib(0,GL_FLOAT,3),VBO::VertexAttrib(1,GL_FLOAT,3) });
+    vbo.setDrawMode(GL_QUADS);
+    vbo.setUsage(GL_STATIC_DRAW);
+    vbo.update(&vertices, 8);
+    EBO &ebo= *new EBO();
+    ebo.setUsage(GL_STATIC_DRAW);
+    ebo.setData(&indices, 24);
+    vao = new VAO();
+    vao->setVBO(&vbo);
+    vao->setEBO(&ebo);
+    vao->setup();
+
 }
 int main()
 {
     sf::ContextSettings windowSettings;
     windowSettings.depthBits = 24;
     windowSettings.stencilBits = 8;
-    windowSettings.antialiasingLevel = 24;
-
-    
+    windowSettings.antialiasingLevel = 16;
 
     sf::RenderWindow window(sf::VideoMode(800, 600), "Window", sf::Style::Default, windowSettings);
     InitOpenGL();

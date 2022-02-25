@@ -15,6 +15,9 @@ public:
 	EBO() {
 		glGenBuffers(1, &id);
 	}
+	void gen() {
+		glGenBuffers(1, &id);
+	}
 	int getVerticesCount() {
 		return verticesCount;
 	}
@@ -27,12 +30,6 @@ public:
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), indices, usage);
 		unbindEBO();
 	}
-	/*void setData(std::vector<uint32_t>& indices) {
-		bind();
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * 4, &indices, usage);
-		verticesCount = indices.size();
-		unbindEBO();
-	}*/
 	void setUsage(GLenum u) {
 		usage = u;
 	}

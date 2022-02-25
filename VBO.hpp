@@ -67,6 +67,9 @@ public:
 	VBO() {
 		glGenBuffers(1, &id);
 	}
+	void gen() {
+		glGenBuffers(1, &id);
+	}
 	void setVertexAttribs(std::vector<VertexAttrib> a) {
 		attribs = a;
 		calculateVertexSize();
