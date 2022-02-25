@@ -8,22 +8,25 @@ class VAO
 {
 private:
 	uint32_t id;
+	
+public:
 	VBO* vbo;
 	EBO* ebo;
-public:
 	VAO() {
+		gen();
+	}
+	VAO(VBO* vbo, EBO* ebo) :vbo(vbo), ebo(ebo) {
+		gen();
+		setup();
+	}
+	void gen() {
 		glGenVertexArrays(1, &id);
 	}
 
 	static void unbindVAO() {
 		glBindVertexArray(0);
 	}
-	void setVBO(VBO* vbo) {
-		this->vbo = vbo;
-	}
-	void setEBO(EBO* ebo) {
-		this->ebo = ebo;
-	}
+
 
 	void bind() {
 		glBindVertexArray(id);

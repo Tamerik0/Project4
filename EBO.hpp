@@ -13,7 +13,16 @@ public:
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 	EBO() {
-		glGenBuffers(1, &id);
+		gen();
+	}
+	EBO(void* indices,int count) {
+		gen();
+		setData(indices, count);
+	}
+	EBO(void* indices, int count, GLenum usage) {
+		gen();
+		setData(indices, count);
+		setUsage(usage);
 	}
 	void gen() {
 		glGenBuffers(1, &id);

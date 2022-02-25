@@ -65,7 +65,20 @@ public:
 		}
 	};
 	VBO() {
-		glGenBuffers(1, &id);
+		gen();
+	}
+	VBO(std::vector<VertexAttrib> a, GLenum drawMode,GLenum usage) {
+		gen();
+		setVertexAttribs(a);
+		setDrawMode(drawMode);
+		setUsage(usage);
+	}
+	VBO(std::vector<VertexAttrib> a, GLenum drawMode, GLenum usage, void* data, int vertexCount) {
+		gen();
+		setVertexAttribs(a);
+		setDrawMode(drawMode);
+		setUsage(usage);
+		update(data, vertexCount);
 	}
 	void gen() {
 		glGenBuffers(1, &id);

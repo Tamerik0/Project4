@@ -11,7 +11,6 @@
 float aspect = 1;
 sf::Clock clock_;
 VAO *vao;
-
 float vertices[]{
     -0.5, -0.5, -0.5,   1,0,0,
     0.5, -0.5, -0.5,   0,1,0,
@@ -45,19 +44,7 @@ void InitOpenGL() {
 
 }
 void CreateCubeVAO () {
-    VBO &vbo = *new VBO();
-    vbo.setVertexAttribs({ VBO::VertexAttrib(0,GL_FLOAT,3),VBO::VertexAttrib(1,GL_FLOAT,3) });
-    vbo.setDrawMode(GL_QUADS);
-    vbo.setUsage(GL_STATIC_DRAW);
-    vbo.update(&vertices, 8);
-    EBO &ebo= *new EBO();
-    ebo.setUsage(GL_STATIC_DRAW);
-    ebo.setData(&indices, 24);
-    vao = new VAO();
-    vao->setVBO(&vbo);
-    vao->setEBO(&ebo);
-    vao->setup();
-
+    vao = new VAO(new VBO({ VBO::VertexAttrib(0,GL_FLOAT,3),VBO::VertexAttrib(1,GL_FLOAT,3) }, GL_QUADS, GL_STREAM_DRAW, &vertices, 8), new EBO(&indices, 24, GL_STREAM_DRAW));
 }
 int main()
 {
@@ -96,7 +83,7 @@ int main()
         
      
         glm::mat4 r(1.0f);
-        r = glm::rotate(r, (float)clock_.getElapsedTime().asMilliseconds() * 0.002f, glm::vec3(0.6, 0.4, 0.5));
+        r = glm::perspective(glm::radians(60.0f), aspect, 0.0001f, 10.0f)*glm::translate(r, glm::vec3(0, 0, -2))*glm::rotate(r, (float)clock_.getElapsedTime().asMilliseconds() * 0.002f, glm::vec3(0.6, 0.4, 0.5));
         glUniformMatrix4fv(0, 1, GL_FALSE, glm::value_ptr(r));
         shaderProgram.use();
         vao->draw();
