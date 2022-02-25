@@ -1,9 +1,0 @@
-﻿  Main.cpp
-F:\Users\Tamer.DESKTOP-5D50BB7\source\repos\Project4\ShaderProgram.hpp(25,16): warning C4834: отмена возвращаемого значения функции с атрибутом "nodiscard"
-F:\Users\Tamer.DESKTOP-5D50BB7\source\repos\Project4\Main.cpp(102,84): warning C4244: аргумент: преобразование "float" в "GLsizei", возможна потеря данных
-F:\Users\Tamer.DESKTOP-5D50BB7\source\repos\Project4\Main.cpp(102,63): warning C4244: аргумент: преобразование "float" в "GLint", возможна потеря данных
-F:\Users\Tamer.DESKTOP-5D50BB7\source\repos\Project4\Main.cpp(106,98): warning C4244: аргумент: преобразование "float" в "GLsizei", возможна потеря данных
-F:\Users\Tamer.DESKTOP-5D50BB7\source\repos\Project4\Main.cpp(106,66): warning C4244: аргумент: преобразование "float" в "GLint", возможна потеря данных
-F:\Users\Tamer.DESKTOP-5D50BB7\source\repos\Project4\Main.cpp(114,80): warning C4305: аргумент: усечение из "double" в "GLfloat"
-F:\Users\Tamer.DESKTOP-5D50BB7\source\repos\Project4\Main.cpp(114,60): warning C4244: аргумент: преобразование "double" в "GLfloat", возможна потеря данных
-  Project4.vcxproj -> F:\Users\Tamer.DESKTOP-5D50BB7\source\repos\Project4\x64\Debug\Project4.exe
